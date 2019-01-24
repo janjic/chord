@@ -2,6 +2,10 @@ index:
     path: /api/{id}
     controller: App\Controller\ApiController::api
 
+csv:
+    path: /api/export/csv
+    controller: App\Controller\ApiController::csv
+
 render_route:
     path: /
     controller: App\Controller\RenderController::renderAction

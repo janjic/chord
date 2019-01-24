@@ -97,4 +97,24 @@ class ApiController extends AbstractController
 
         return new JsonResponse($data);
     }
+
+    public function csv()
+    {
+        $list = array(
+            //these are the columns
+            array('Firstname', 'Lastname',),
+            //these are the rows
+            array('Andrei', 'Boar'),
+            array('John', 'Doe')
+        );
+        $fp = fopen('php://output', 'w');
+        foreach ($list as $fields) {
+            fputcsv($fp, $fields);
+        }
+        $response = new Response();
+        $response->headers->set('Content-Type', 'text/csv');
+        //it's gonna output in a testing.csv file
+        $response->headers->set('Content-Disposition', 'attachment; filename="testing.csv"');
+        return $response;
+    }
 }
