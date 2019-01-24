@@ -1,0 +1,7 @@
+index:
+    path: /api/{id}
+    controller: App\Controller\ApiController::api
+
+render_route:
+    path: /
+    controller: App\Controller\RenderController::renderAction

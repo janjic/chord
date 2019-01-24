@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+        {% block stylesheets %}
+        <style>
+            #nav {
+                height:100%;
+                width:30%;
+                float:left;
+                border:2px solid black;
+                border-radius:15px;
+            }
+
+            .main {
+                float:right;
+                width:69%;
+                height:80%;
+                position:relative;
+            }
+
+            #footer {
+                display:block;
+                width:100%;
+                height:10%;
+                background:yellow;
+                border:2px solid black;
+                position:relative;
+                clear:both;
+                border-radius:15px;
+                padding: 10px;
+            }
+        </style>
+        {% endblock %}
+    </head>
+    <body>
+    <div id="main" class="main">
+        <h2>Basic HTML Table</h2>
+
+        <table border="1" style="width:100%">
+            <tr>
+                <th>busstops</th>
+                <th>schools</th>
+                <th>addresses</th>
+            </tr>
+            <tr>
+                <td id="busstops">not selected</td>
+                <td  id="schools">not selected</td>
+                <td id="addresses">not selected</td>
+            </tr>
+        </table>
+
+
+    </div>
+    <div style="overflow-y: scroll; height:660px;" id="nav">
+        {% set last = '' %}
+        {% for postCode in postCodes %}
+            {% set firstPart = postCode['postcode']|split(' ')[0] %}
+            {% set secondPart = postCode['postcode']|split(' ')[1] %}
+            {%  if firstPart != last %}
+                    <h4>{{ firstPart }}</h4>
+                <a href="#" class="selectable_postcode"  id="{{ postCode['id'] }}">{{ secondPart }}</a>
+
+            {% else %}
+                <a href="#" class="selectable_postcode"  id="{{ postCode['id'] }}">{{ secondPart }}</a>
+            {% endif %}
+            {% set last = firstPart %}
+        {% endfor %}
+    </div>
+
+    <div>
+        <script>
+          $(document ).ready(function() {
+            $('.selectable_postcode').on("click",function(event){
+              event.preventDefault();
+              var id =  $(this).attr("id");
+              $.get( "/api/"+id, function( data ) {
+                if (data && data.status === 200) {
+                  $('#busstops').html(data.bussStops);
+                  $('#schools').html(data.schools);
+                  $('#addresses').html(data.addresses);
+                }
+              });
+              //post code
+            })
+          });
+        </script>
+    </div>
+    </body>
+</html>
