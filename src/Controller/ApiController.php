@@ -5,7 +5,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\DBAL\Driver\Connection;
-use Symfony\Component\VarDumper\VarDumper;
 
 class ApiController extends AbstractController
 {
@@ -98,20 +97,26 @@ class ApiController extends AbstractController
         return new JsonResponse($data);
     }
 
-    public function csv()
+    public function csv(Connection $connection)
     {
+
         $list = array(
             //these are the columns
-            array('Firstname', 'Lastname',),
-            //these are the rows
-            array('Andrei', 'Boar'),
-            array('John', 'Doe')
+            'id, fullName',
+//            //these are the rows
         );
-        $fp = fopen('php://output', 'w');
-        foreach ($list as $fields) {
-            fputcsv($fp, $fields);
+        $query = 'SELECT u.id, CONCAT(u.name," ", u.surname) as fullName 
+FROM users u INNER JOIN houses h ON h.user_id = u.id INNER JOIN addresses a ON h.address_id = a.id';
+
+        $results = $connection->fetchAll($query);
+
+        foreach ($results as $result) {
+            $data = array($result['id'], $result['fullName']);
+            $list[] = implode(',', $data);
         }
-        $response = new Response();
+
+        $content = implode("\n", $list);
+        $response = new Response($content);
         $response->headers->set('Content-Type', 'text/csv');
         //it's gonna output in a testing.csv file
         $response->headers->set('Content-Disposition', 'attachment; filename="testing.csv"');
