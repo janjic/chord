@@ -102,7 +102,7 @@ class ApiController extends AbstractController
 
         $list = array(
             //these are the columns
-            'id, fullName, property_type,full_address',
+            'id, fullName, property_type,full_address,like_received,like_given',
 //            //these are the rows
         );
         $query = 'SELECT u.id, CONCAT(u.name," ", u.surname) as fullName, 
@@ -112,7 +112,7 @@ class ApiController extends AbstractController
     WHEN 3        THEN "big house"
     WHEN 4        THEN "Villa"
      ELSE "-"  END AS property_type,
-    CONCAT (p.postcode, "-",a.district, ",", a.locality, ",", a.street, ",",a.site, ",",a.site_number, ",",a.site_description, ",", a.site_subdescription) AS full_address
+    CONCAT (p.postcode, "-" ,a.district, ",", a.locality, ",", a.street, ",",a.site, ",",a.site_number, ",",a.site_description, ",", a.site_subdescription) AS full_address
 FROM users u INNER JOIN houses h ON h.user_id = u.id 
 INNER JOIN addresses a ON h.address_id = a.id
 INNER JOIN postcodes p ON a.postcode_id = p.id';
