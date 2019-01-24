@@ -102,7 +102,7 @@ class ApiController extends AbstractController
 
         $list = array(
             //these are the columns
-            'id, fullName, property_type,full_address',
+            'id, fullName, property_type,full_address, given, received',
 //            //these are the rows
         );
         $query = 'SELECT u.id, CONCAT(u.name," ", u.surname) as fullName, 
@@ -120,6 +120,7 @@ INNER JOIN postcodes p ON a.postcode_id = p.id';
         $results = $connection->fetchAll($query);
 
         foreach ($results as $result) {
+
             $data = array($result['id'], $result['fullName'], $result['property_type'], $result['full_address']);
             $list[] = implode(',', $data);
         }
