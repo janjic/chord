@@ -102,16 +102,25 @@ class ApiController extends AbstractController
 
         $list = array(
             //these are the columns
-            'id, fullName',
+            'id, fullName, property_type,full_address',
 //            //these are the rows
         );
-        $query = 'SELECT u.id, CONCAT(u.name," ", u.surname) as fullName 
-FROM users u INNER JOIN houses h ON h.user_id = u.id INNER JOIN addresses a ON h.address_id = a.id';
+        $query = 'SELECT u.id, CONCAT(u.name," ", u.surname) as fullName, 
+    CASE h.propertytype
+    WHEN 1      THEN "FLAT"
+    WHEN 2        THEN "small house"
+    WHEN 3        THEN "big house"
+    WHEN 4        THEN "Villa"
+     ELSE "-"  END AS property_type,
+    CONCAT (p.postcode, "-",a.district, ",", a.locality, ",", a.street, ",",a.site, ",",a.site_number, ",",a.site_description, ",", a.site_subdescription) AS full_address
+FROM users u INNER JOIN houses h ON h.user_id = u.id 
+INNER JOIN addresses a ON h.address_id = a.id
+INNER JOIN postcodes p ON a.postcode_id = p.id';
 
         $results = $connection->fetchAll($query);
 
         foreach ($results as $result) {
-            $data = array($result['id'], $result['fullName']);
+            $data = array($result['id'], $result['fullName'], $result['property_type'], $result['full_address']);
             $list[] = implode(',', $data);
         }
 
