@@ -25,7 +25,7 @@ class Photos
 
     /**
      * @ManyToOne(targetEntity="Users")
-     * @JoinColumn(name="userId", referencedColumnName="id")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 

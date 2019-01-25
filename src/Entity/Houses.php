@@ -25,13 +25,13 @@ class Houses
 
     /**
      * @ManyToOne(targetEntity="Postcodes")
-     * @JoinColumn(name="postcodeId", referencedColumnName="id")
+     * @JoinColumn(name="postcode_id", referencedColumnName="id", nullable=true)
      */
     private $postcode;
 
     /**
      * @ManyToOne(targetEntity="Addresses")
-     * @JoinColumn(name="addressId", referencedColumnName="id", nullable=true)
+     * @JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
      */
     private $address;
 

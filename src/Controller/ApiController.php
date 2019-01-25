@@ -115,7 +115,8 @@ class ApiController extends AbstractController
     CONCAT (p.postcode, "-" ,a.district, " ", a.locality, " ", a.street, " ",a.site, " ",a.site_number, " ",a.site_description, " ", a.site_subdescription) AS full_address
 FROM users u INNER JOIN houses h ON h.user_id = u.id 
 INNER JOIN addresses a ON h.address_id = a.id
-INNER JOIN postcodes p ON a.postcode_id = p.id';
+INNER JOIN postcodes p ON a.postcode_id = p.id
+INNER JOIN ';
 
         $results = $connection->fetchAll($query);
 

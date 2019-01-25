@@ -26,7 +26,7 @@ class Addresses
 
     /**
      * @ManyToOne(targetEntity="Users")
-     * @JoinColumn(name="postcodeId", referencedColumnName="id")
+     * @JoinColumn(name="postcode_id", referencedColumnName="id")
      */
     private $postcode;
 

@@ -32,7 +32,7 @@ class Schools
 
     /**
      * @ManyToOne(targetEntity="Postcodes")
-     * @JoinColumn(name="postcodeId", referencedColumnName="id")
+     * @JoinColumn(name="postcode_id", referencedColumnName="id",  nullable=true)
      */
     private $postcode;
 
