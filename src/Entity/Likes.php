@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Likes
@@ -22,16 +24,14 @@ class Likes
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="a", type="integer", nullable=false, options={"unsigned"=true})
+     * @ManyToOne(targetEntity="Users")
+     * @JoinColumn(name="a", referencedColumnName="id")
      */
     private $a;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="b", type="integer", nullable=false, options={"unsigned"=true})
+     * @ManyToOne(targetEntity="Users")
+     * @JoinColumn(name="b", referencedColumnName="id")
      */
     private $b;
 
@@ -54,30 +54,6 @@ class Likes
         return $this->id;
     }
 
-    public function getA(): ?int
-    {
-        return $this->a;
-    }
-
-    public function setA(int $a): self
-    {
-        $this->a = $a;
-
-        return $this;
-    }
-
-    public function getB(): ?int
-    {
-        return $this->b;
-    }
-
-    public function setB(int $b): self
-    {
-        $this->b = $b;
-
-        return $this;
-    }
-
     public function getLike(): ?bool
     {
         return $this->like;
@@ -98,6 +74,30 @@ class Likes
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getA(): ?Users
+    {
+        return $this->a;
+    }
+
+    public function setA(?Users $a): self
+    {
+        $this->a = $a;
+
+        return $this;
+    }
+
+    public function getB(): ?Users
+    {
+        return $this->b;
+    }
+
+    public function setB(?Users $b): self
+    {
+        $this->b = $b;
 
         return $this;
     }

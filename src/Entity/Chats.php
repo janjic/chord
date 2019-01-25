@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Chats
@@ -22,16 +24,14 @@ class Chats
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="from", type="integer", nullable=false, options={"unsigned"=true})
+     * @ManyToOne(targetEntity="Users")
+     * @JoinColumn(name="from", referencedColumnName="id")
      */
     private $from;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="to", type="integer", nullable=false, options={"unsigned"=true})
+     * @ManyToOne(targetEntity="Users")
+     * @JoinColumn(name="from", referencedColumnName="id")
      */
     private $to;
 
@@ -59,30 +59,6 @@ class Chats
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getFrom(): ?int
-    {
-        return $this->from;
-    }
-
-    public function setFrom(int $from): self
-    {
-        $this->from = $from;
-
-        return $this;
-    }
-
-    public function getTo(): ?int
-    {
-        return $this->to;
-    }
-
-    public function setTo(int $to): self
-    {
-        $this->to = $to;
-
-        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -120,6 +96,31 @@ class Chats
 
         return $this;
     }
+
+    public function getFrom(): ?Users
+    {
+        return $this->from;
+    }
+
+    public function setFrom(?Users $from): self
+    {
+        $this->from = $from;
+
+        return $this;
+    }
+
+    public function getTo(): ?Users
+    {
+        return $this->to;
+    }
+
+    public function setTo(?Users $to): self
+    {
+        $this->to = $to;
+
+        return $this;
+    }
+    
 
 
 }

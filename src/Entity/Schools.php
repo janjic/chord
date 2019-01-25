@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Schools
@@ -29,11 +31,10 @@ class Schools
     private $name;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="postcode_id", type="integer", nullable=false, options={"unsigned"=true})
+     * @ManyToOne(targetEntity="Postcodes")
+     * @JoinColumn(name="postcodeId", referencedColumnName="id")
      */
-    private $postcodeId;
+    private $postcode;
 
     public function getId(): ?int
     {
@@ -52,14 +53,14 @@ class Schools
         return $this;
     }
 
-    public function getPostcodeId(): ?int
+    public function getPostcode(): ?Postcodes
     {
-        return $this->postcodeId;
+        return $this->postcode;
     }
 
-    public function setPostcodeId(int $postcodeId): self
+    public function setPostcode(?Postcodes $postcode): self
     {
-        $this->postcodeId = $postcodeId;
+        $this->postcode = $postcode;
 
         return $this;
     }

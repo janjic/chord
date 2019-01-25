@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * Houses
  *
- * @ORM\Table(name="houses", indexes={@ORM\Index(name="user_id", columns={"user_id"})})
+ * @ORM\Table(name="houses")
  * @ORM\Entity
  */
 class Houses
@@ -22,18 +24,16 @@ class Houses
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="postcode_id", type="integer", nullable=false, options={"unsigned"=true})
+     * @ManyToOne(targetEntity="Postcodes")
+     * @JoinColumn(name="postcodeId", referencedColumnName="id")
      */
-    private $postcodeId;
+    private $postcode;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="address_id", type="integer", nullable=false, options={"unsigned"=true})
+     * @ManyToOne(targetEntity="Addresses")
+     * @JoinColumn(name="addressId", referencedColumnName="id", nullable=true)
      */
-    private $addressId;
+    private $address;
 
     /**
      * @var bool
@@ -50,7 +50,7 @@ class Houses
     private $updated;
 
     /**
-     * @var \Users
+     * @var Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
      * @ORM\JoinColumns({
@@ -62,30 +62,6 @@ class Houses
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getPostcodeId(): ?int
-    {
-        return $this->postcodeId;
-    }
-
-    public function setPostcodeId(int $postcodeId): self
-    {
-        $this->postcodeId = $postcodeId;
-
-        return $this;
-    }
-
-    public function getAddressId(): ?int
-    {
-        return $this->addressId;
-    }
-
-    public function setAddressId(int $addressId): self
-    {
-        $this->addressId = $addressId;
-
-        return $this;
     }
 
     public function getPropertytype(): ?bool
@@ -112,6 +88,30 @@ class Houses
         return $this;
     }
 
+    public function getPostcode(): ?Postcodes
+    {
+        return $this->postcode;
+    }
+
+    public function setPostcode(?Postcodes $postcode): self
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Addresses
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Addresses $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
     public function getUser(): ?Users
     {
         return $this->user;
@@ -123,6 +123,5 @@ class Houses
 
         return $this;
     }
-
 
 }
