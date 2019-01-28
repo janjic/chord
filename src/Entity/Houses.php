@@ -25,13 +25,13 @@ class Houses
 
     /**
      * @ManyToOne(targetEntity="Postcodes")
-     * @JoinColumn(name="postcode_id", referencedColumnName="id", nullable=false)
+     * @JoinColumn(name="postcode_id", referencedColumnName="id", nullable=true)
      */
     private $postcode;
 
     /**
      * @ManyToOne(targetEntity="Addresses")
-     * @JoinColumn(name="address_id", referencedColumnName="id", nullable=false)
+     * @JoinColumn(name="address_id", referencedColumnName="id", nullable=true)
      */
     private $address;
 
@@ -53,11 +53,19 @@ class Houses
      * @var Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     * })
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+
+    /**
+     *@ORM\Column(type="integer", options={"default":0})
+     */
+    protected $numOfPeople;
+
+    /**
+     *@ORM\Column(type="integer", options={"default":0})
+     */
+    protected $numOfOldMan;
 
     public function getId(): ?int
     {

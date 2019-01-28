@@ -42,6 +42,36 @@ class Users
      */
     private $email = '\'\'';
 
+    /**
+     *@ORM\Column(type="integer", options={"default":0})
+     */
+    protected $numLGiven;
+
+    /**
+     *@ORM\Column(type="integer", options={"default":0})
+     */
+    protected $numLReceived;
+
+    /**
+     *@ORM\Column(type="integer", options={"default":0})
+     */
+    protected $numMatches;
+
+    /**
+     *@ORM\Column(type="integer", options={"default":0})
+     */
+    protected $numChats;
+
+    /**
+     *@ORM\Column(type="integer", options={"default":0})
+     */
+    protected $numAnwMsg;
+
+    /**
+     *@ORM\Column(type="text", options={"default":""})
+     */
+    protected $likeIds;
+
     public function getId(): ?int
     {
         return $this->id;

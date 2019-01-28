@@ -25,13 +25,13 @@ class Chats
 
     /**
      * @ManyToOne(targetEntity="Users")
-     * @JoinColumn(name="from_id", referencedColumnName="id")
+     * @JoinColumn(name="from", referencedColumnName="id")
      */
     private $from;
 
     /**
      * @ManyToOne(targetEntity="Users")
-     * @JoinColumn(name="to_id", referencedColumnName="id")
+     * @JoinColumn(name="to", referencedColumnName="id")
      */
     private $to;
 

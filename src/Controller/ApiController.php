@@ -102,7 +102,7 @@ class ApiController extends AbstractController
 
         $list = array(
             //these are the columns
-            'id, fullName, property_type,full_address, given, received',
+            'id, fullName, property_type,full_address, num_like_given, num_like_received, like_ids, num_of_people, num_of_old_man',
 //            //these are the rows
         );
         $query = 'SELECT u.id, CONCAT(u.name," ", u.surname) as fullName, 
@@ -112,17 +112,24 @@ class ApiController extends AbstractController
     WHEN 3        THEN "big house"
     WHEN 4        THEN "Villa"
      ELSE "-"  END AS property_type,
-    CONCAT (p.postcode, "-" ,a.district, " ", a.locality, " ", a.street, " ",a.site, " ",a.site_number, " ",a.site_description, " ", a.site_subdescription) AS full_address
+    CONCAT (p.postcode, "-" ,a.district, " ", a.locality, " ", a.street, " ",a.site, " ",a.site_number, " ",a.site_description, " ", a.site_subdescription) AS full_address,
+    u.num_lgiven as num_like_given,
+    u.num_lreceived as num_like_received,
+    u.like_ids,
+    h.num_of_people as num_of_people,
+    h.num_of_old_man as num_of_old_man
 FROM users u INNER JOIN houses h ON h.user_id = u.id 
 INNER JOIN addresses a ON h.address_id = a.id
 INNER JOIN postcodes p ON a.postcode_id = p.id
-INNER JOIN ';
+INNER JOIN people on people.user_id = u.id
+';
 
         $results = $connection->fetchAll($query);
 
         foreach ($results as $result) {
 
-            $data = array($result['id'], $result['fullName'], $result['property_type'], $result['full_address']);
+            $data = array($result['id'], $result['fullName'], $result['property_type'], $result['full_address'], $result['num_like_given'], $result['num_like_received'], '"'.$result['like_ids'].'"',
+                $result['num_of_people'], $result['num_of_old_man']);
             $list[] = implode(',', $data);
         }
 

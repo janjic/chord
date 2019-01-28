@@ -1,9 +1,20 @@
 # chord
 UPITI ZA STRUKTURU
 mysql -uroot -proot test_chord < final_chord_test.sql
-
+UPDATE schools SET postcode_id = NULL WHERE postcode_id = 0;
 UPDATE schools SET postcode_id = NULL WHERE postcode_id NOT IN (SELECT id FROM postcodes);
 UPDATE addresses SET postcode_id = NULL WHERE postcode_id NOT IN (SELECT id FROM postcodes)
+
+
+UPDATE users INNER JOIN
+(SELECT users.id as id, COUNT(likes.a) as num, GROUP_CONCAT(DISTINCT likes.b) as ids
+FROM users INNER JOIN likes ON users.id = likes.a 
+GROUP BY users.id) subQuery  ON users.id = subQuery.id
+SET num_lgiven = subQuery.num, like_ids = CONCAT("",subQuery.ids, """);
+
+
+UPDATE houses 
+INNER JOIN (SELECT COUNT(DISTINCT people.id) as num_of_people,SUM(CASE WHEN people.age>45 AND people.sex LIKE 'M' THEN 1 ELSE 0 END) as num_of_old_man, houses.id as id FROM houses INNER JOIN users ON houses.user_id = users.id INNER JOIN people on people.user_id = users.id GROUP BY houses.id) as sub ON houses.id = sub.id SET houses.num_of_people = sub.num_of_people, houses.num_of_old_man = sub.num_of_old_man;
 
 #Linkovi i upiti
 
