@@ -51,3 +51,8 @@ FROM hotel as dest
 having distance < @dist
 ORDER BY distance limit 10;
  */
+
+Za pokretanje:
+
+composer install
+php bin/console server:start
