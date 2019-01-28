@@ -54,5 +54,4 @@ ORDER BY distance limit 10;
 
 Za pokretanje:
 
-composer install
-php bin/console server:start
+composer install && php bin/console server:start
