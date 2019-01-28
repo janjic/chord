@@ -1,4 +1,9 @@
 # chord
+UPITI ZA STRUKTURU
+mysql -uroot -proot test_chord < final_chord_test.sql
+
+UPDATE schools SET postcode_id = NULL WHERE postcode_id NOT IN (SELECT id FROM postcodes);
+UPDATE addresses SET postcode_id = NULL WHERE postcode_id NOT IN (SELECT id FROM postcodes)
 
 #Linkovi i upiti
 
